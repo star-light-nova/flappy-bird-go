@@ -20,7 +20,7 @@ func homeButtonsContainer(_window fyne.Window) *fyne.Container {
     playButton := widget.NewButton("Play", func(){
         log.Println("Play button tapped.")
 
-        _window.SetContent(play.PlayScreen())
+        _window.SetContent(play.PlayScreen(_window))
     })
 
     quitButton := widget.NewButton("Quit", func() {

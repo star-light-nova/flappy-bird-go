@@ -1,0 +1,5 @@
+package obstacle
+
+func Generator() {
+
+}

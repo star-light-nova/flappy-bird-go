@@ -13,7 +13,7 @@ type Obstacle struct {
 	*canvas.Rectangle
 }
 
-const RECTANGLE_WIDTH = 55.0
+const RECTANGLE_WIDTH = float32(55.0)
 
 func New(_window fyne.Window) (top, bottom *Obstacle) {
 	posTopLeft, posBottomLeft := passBoxPosition(_window)
@@ -22,7 +22,7 @@ func New(_window fyne.Window) (top, bottom *Obstacle) {
 	bottomRectangle := canvas.NewRectangle(color.White)
 
 	topRectangle.Move(posTopLeft)
-	topRectangle.Resize(fyne.NewSize(RECTANGLE_WIDTH, -_window.Canvas().Size().Height*0.5))
+	topRectangle.Resize(fyne.NewSize(RECTANGLE_WIDTH, -_window.Canvas().Size().Height))
 
 	bottomRectangle.Move(posBottomLeft)
 	bottomRectangle.Resize(fyne.NewSize(RECTANGLE_WIDTH, _window.Canvas().Size().Height))
@@ -44,10 +44,11 @@ func randomPoint(start float32, end float32) float32 {
 }
 
 func passBoxPosition(_window fyne.Window) (posTopLeft, posBottomLeft fyne.Position) {
-	windowHalfWidth := float32(550.0 * 0.5)
+	windowWidth := _window.Canvas().Size().Width
+	windowHeight := _window.Canvas().Size().Height
 
-	posTopLeft.X = randomPoint(windowHalfWidth, 250.0)
-	posTopLeft.Y = randomPoint(0, 250.0)
+	posTopLeft.X = windowWidth
+	posTopLeft.Y = randomPoint(RECTANGLE_WIDTH, windowHeight-RECTANGLE_WIDTH*2)
 
 	posBottomLeft.X = posTopLeft.X
 	posBottomLeft.Y = posTopLeft.Y + RECTANGLE_WIDTH

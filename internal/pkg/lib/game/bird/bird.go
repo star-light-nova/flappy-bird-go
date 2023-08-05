@@ -10,9 +10,11 @@ import (
 )
 
 const (
-	UP         = 25.0
-	DOWN       = 0.1
-	SPACE_CODE = 49
+	UP          = float32(0.2)
+	DOWN        = float32(0.1)
+	JUMP_HEIGHT = 12.0
+	SPACE_CODE  = 49
+    TOLLERANCE  = float32(0.1)
 )
 
 type Bird struct {
@@ -25,11 +27,11 @@ func New(_window fyne.Window) *Bird {
 	circle.StrokeColor = color.Black
 	circle.Resize(fyne.NewSize(20.0, 20.0))
 
-    bird := &Bird{circle}
+	bird := &Bird{circle}
 
 	if desktopCanvas, ok := _window.Canvas().(desktop.Canvas); ok {
 		desktopCanvas.SetOnKeyUp(func(key *fyne.KeyEvent) {
-            bird.JumpOnSpace(key)
+			bird.JumpOnSpace(key)
 		})
 	}
 
@@ -37,12 +39,20 @@ func New(_window fyne.Window) *Bird {
 		bird.Fall()
 	}()
 
-    return bird
+	return bird
 }
 
 func (b Bird) Jump() {
-	move := canvas.NewPositionAnimation(b.Position1, fyne.NewPos(b.Position1.X, b.Position1.Y-UP), time.Millisecond, b.Move)
-	move.Start()
+	target := b.Position().AddXY(0, -JUMP_HEIGHT)
+	for range time.Tick(time.Millisecond) {
+		nextPosition := b.Position1.SubtractXY(0, UP)
+
+		b.Move(nextPosition)
+
+		if abs32(nextPosition.Y - target.Y) < TOLLERANCE {
+			break
+		}
+	}
 }
 
 func (b Bird) Fall() {
@@ -52,7 +62,15 @@ func (b Bird) Fall() {
 }
 
 func (b Bird) JumpOnSpace(key *fyne.KeyEvent) {
-    if key.Physical.ScanCode == SPACE_CODE {
-        b.Jump()
+	if key.Physical.ScanCode == SPACE_CODE {
+		b.Jump()
+	}
+}
+
+func abs32(f float32) float32 {
+    if f > 0 {
+        return f
     }
+
+    return -f
 }

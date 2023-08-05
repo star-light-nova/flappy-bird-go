@@ -32,7 +32,7 @@ func homeButtonsContainer(_window fyne.Window) *fyne.Container {
     vbox := container.NewVBox(playButton, quitButton)
 
     // FIX: Does not work for now.
-    vbox.Resize(fyne.NewSize(500.0, 500.0))
+    vbox.Resize(fyne.NewSize(550.0, 550.0))
 
     return vbox
 }

@@ -10,11 +10,11 @@ import (
 )
 
 const (
-	UP          = float32(0.2)
+	UP          = float32(0.25)
 	DOWN        = float32(0.1)
-	JUMP_HEIGHT = 12.0
-	SPACE_CODE  = 49
     TOLLERANCE  = float32(0.1)
+	JUMP_HEIGHT = float32(15.0)
+	SPACE_CODE  = 49
 )
 
 type Bird struct {

@@ -13,6 +13,7 @@ func Start() {
     _window.SetTitle("Flappy Bird Go")
     _window.Resize(fyne.NewSize(550.0, 550.0))
 
+    // _window.SetMainMenu(menu.Home(_window))
 	_window.SetContent(menu.Home(_window))
 
     _window.ShowAndRun()

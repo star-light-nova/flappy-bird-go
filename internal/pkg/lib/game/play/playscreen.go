@@ -15,7 +15,7 @@ func PlayScreen(_window fyne.Window) *fyne.Container {
 	bird := bird.New(_window)
 	bird.Move(fyne.NewPos(playScreen.Size().Width/2.0-200.0, playScreen.Size().Height/2.0))
 
-    infWall := NewInfiniteWallObstacles(_window)
+    infWall := NewInfiniteWallObstacles(bird, _window)
 
 	playScreen.Add(bird.Circle)
     playScreen.Add(infWall)

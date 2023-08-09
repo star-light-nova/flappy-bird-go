@@ -12,8 +12,8 @@ import (
 const (
 	UP          = float32(0.25)
 	DOWN        = float32(0.1)
-    TOLLERANCE  = float32(0.001)
-	JUMP_HEIGHT = float32(18.0)
+    TOLLERANCE  = float32(0.00001)
+	JUMP_HEIGHT = float32(15.0)
 	SPACE_CODE  = 49
 )
 
@@ -44,21 +44,19 @@ func New(_window fyne.Window) *Bird {
 
 func (b Bird) Jump() {
 	target := b.Position().AddXY(0, -JUMP_HEIGHT)
-    nextPosition := b.Position1.SubtractXY(0, UP)
-
-	for range time.Tick(time.Millisecond) {
-        if abs32(nextPosition.Y - target.Y) <= TOLLERANCE {
-            break
-        }
+	for range time.Tick(time.Second / 1000.0) {
+		nextPosition := b.Position1.SubtractXY(0, UP)
 
 		b.Move(nextPosition)
 
-        nextPosition = b.Position1.SubtractXY(0, UP)
+		if abs32(nextPosition.Y - target.Y) <= TOLLERANCE {
+			break
+		}
 	}
 }
 
 func (b Bird) Fall() {
-	for range time.Tick(time.Millisecond) {
+	for range time.Tick(time.Second / 1000.0) {
 		b.Move(fyne.NewPos(b.Position1.X, b.Position1.Y+DOWN))
 	}
 }

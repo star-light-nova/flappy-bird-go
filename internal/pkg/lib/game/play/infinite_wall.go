@@ -6,8 +6,8 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 
-	"github.com/StarLightNova/flappy-bird-go/internal/pkg/lib/game/bird"
-	"github.com/StarLightNova/flappy-bird-go/internal/pkg/lib/game/obstacle"
+	"github.com/star-light-nova/flappy-bird-go/internal/pkg/lib/game/bird"
+	"github.com/star-light-nova/flappy-bird-go/internal/pkg/lib/game/obstacle"
 )
 
 func NewInfiniteWallObstacles(bird *bird.Bird, _window fyne.Window) *fyne.Container {

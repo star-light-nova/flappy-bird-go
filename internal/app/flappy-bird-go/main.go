@@ -3,7 +3,7 @@ package flappybirdgo
 import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	"github.com/StarLightNova/flappy-bird-go/internal/pkg/lib/game/menu"
+	"github.com/star-light-nova/flappy-bird-go/internal/pkg/lib/game/menu"
 )
 
 func Start() {

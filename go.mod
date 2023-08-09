@@ -1,4 +1,4 @@
-module github.com/StarLightNova/flappy-bird-go
+module github.com/star-light-nova/flappy-bird-go
 
 go 1.20
 

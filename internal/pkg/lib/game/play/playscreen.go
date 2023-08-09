@@ -1,7 +1,7 @@
 package play
 
 import (
-	"github.com/StarLightNova/flappy-bird-go/internal/pkg/lib/game/bird"
+	"github.com/star-light-nova/flappy-bird-go/internal/pkg/lib/game/bird"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"

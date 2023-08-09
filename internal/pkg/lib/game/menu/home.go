@@ -5,7 +5,7 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 
-    "github.com/StarLightNova/flappy-bird-go/internal/pkg/lib/game/play"
+    "github.com/star-light-nova/flappy-bird-go/internal/pkg/lib/game/play"
 )
 
 func Home(_window fyne.Window) *fyne.Container {

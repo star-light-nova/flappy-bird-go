@@ -26,8 +26,8 @@ func New(_window fyne.Window) {
             isGameEnded := <- gameEndChan
 
 			if isGameEnded {
-				dialog.ShowConfirm("You have lost", "Restart?", func(b bool) {
-					if b {
+				dialog.ShowConfirm("You have lost", "Restart?", func(isYes bool) {
+					if isYes {
 						_window.SetContent(play.PlayScreen(_window, gameEndChan))
 					} else {
 						_window.SetContent(mainMenu)

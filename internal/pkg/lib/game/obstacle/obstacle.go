@@ -7,6 +7,7 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/canvas"
+	"github.com/star-light-nova/flappy-bird-go/internal/pkg/lib/game/constants"
 )
 
 type Obstacle struct {
@@ -22,10 +23,10 @@ func New(_window fyne.Window) (top, bottom *Obstacle) {
 	bottomRectangle := canvas.NewRectangle(color.White)
 
 	topRectangle.Move(posTopLeft)
-	topRectangle.Resize(fyne.NewSize(RECTANGLE_WIDTH, -_window.Canvas().Size().Height))
+	topRectangle.Resize(fyne.NewSize(RECTANGLE_WIDTH, -constants.FULL_HEIGHT))
 
 	bottomRectangle.Move(posBottomLeft)
-	bottomRectangle.Resize(fyne.NewSize(RECTANGLE_WIDTH, _window.Canvas().Size().Height))
+	bottomRectangle.Resize(fyne.NewSize(RECTANGLE_WIDTH, constants.FULL_HEIGHT))
 
 	top = &Obstacle{
 		topRectangle,
@@ -44,8 +45,8 @@ func randomPoint(start float32, end float32) float32 {
 }
 
 func passBoxPosition(_window fyne.Window) (posTopLeft, posBottomLeft fyne.Position) {
-	windowWidth := _window.Canvas().Size().Width
-	windowHeight := _window.Canvas().Size().Height
+	windowWidth := constants.FULL_WIDTH
+	windowHeight := constants.FULL_HEIGHT
 
 	posTopLeft.X = windowWidth
 	posTopLeft.Y = randomPoint(RECTANGLE_WIDTH, windowHeight-RECTANGLE_WIDTH*2)

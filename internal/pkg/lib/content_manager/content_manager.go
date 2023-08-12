@@ -11,9 +11,9 @@ import (
 func New(_window fyne.Window) {
 	gameEndChan := make(chan bool)
 	mainMenu, playBtn, quitBtn := menu.Home()
-	playScreen := play.PlayScreen(_window, gameEndChan)
 
 	playBtn.OnTapped = func() {
+        playScreen := play.PlayScreen(_window, gameEndChan)
 		_window.SetContent(playScreen)
 	}
 

@@ -19,12 +19,12 @@ func NewInfiniteWallObstacles(bird *bird.Bird, _window fyne.Window, gameEndChan 
 	wall.Add(top.Rectangle)
 	wall.Add(bot.Rectangle)
 
-	go wallMovementAndIsCollided(wall, top, bot, bird, _window, gameEndChan)
+	go wallMovement(wall, top, bot, bird, _window, gameEndChan)
 
 	return wall
 }
 
-func wallMovementAndIsCollided(wall *fyne.Container, top, bot *obstacle.Obstacle, bird *bird.Bird, _window fyne.Window, gameEndChan chan<- bool) {
+func wallMovement(wall *fyne.Container, top, bot *obstacle.Obstacle, bird *bird.Bird, _window fyne.Window, gameEndChan chan<- bool) {
 	targetX := -obstacle.RECTANGLE_WIDTH
 
 	for range time.Tick(time.Millisecond * 6) {
@@ -46,14 +46,28 @@ func wallMovementAndIsCollided(wall *fyne.Container, top, bot *obstacle.Obstacle
 
 		topPos := top.Position()
 		botPos := bot.Position()
-		bPosX := bird.Position1.X
-		bPosY := bird.Position1.Y
+        birdPos := bird.Position1
 
-		if topPos.X < bPosX && topPos.X+obstacle.RECTANGLE_WIDTH > bPosX {
-			if (bPosY > 0 && bPosY < topPos.Y) || (bPosY > botPos.Y && bPosY < _window.Canvas().Size().Height) {
-				gameEndChan <- true
-				break
-			}
+		if isCollidedWithObstacle(topPos, botPos, birdPos, _window.Canvas().Size().Height) {
+			gameEndChan <- true
+			break
 		}
 	}
+}
+
+func isCollidedWithObstacle(topPos, botPos, birdPos fyne.Position, windowHeight float32) bool {
+    bPosX := birdPos.X
+    bPosY := birdPos.Y
+
+	if topPos.X < bPosX && topPos.X+obstacle.RECTANGLE_WIDTH > bPosX {
+		if (bPosY > 0 && bPosY < topPos.Y) || (bPosY > botPos.Y && bPosY < windowHeight) {
+            return true
+		}
+	}
+
+    if bPosY <= 0 || bPosY >= windowHeight {
+        return true
+    }
+
+    return false
 }

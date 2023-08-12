@@ -47,7 +47,9 @@ func (b Bird) Jump() {
     nextPosition := b.Position1.SubtractXY(0, UP)
 
 	for range time.Tick(time.Millisecond) {
-        if abs32(nextPosition.Y - target.Y) <= TOLLERANCE {
+        diff := abs32(nextPosition.Y - target.Y)
+
+        if diff <= TOLLERANCE || diff >= JUMP_HEIGHT {
             break
         }
 

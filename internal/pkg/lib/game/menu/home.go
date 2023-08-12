@@ -5,29 +5,23 @@ import (
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/widget"
 
-    "github.com/star-light-nova/flappy-bird-go/internal/pkg/lib/game/play"
+	// "github.com/star-light-nova/flappy-bird-go/internal/pkg/lib/game/play"
 )
 
-func Home(_window fyne.Window) *fyne.Container {
-    homeContainer := container.NewCenter(homeButtonsContainer(_window))
+func Home() (*fyne.Container, *widget.Button, *widget.Button) {
+	homeBtnsContainer, playBtn, quitBtn := homeButtonsContainer()
 
-    return homeContainer
+    homeContainer := container.NewCenter(homeBtnsContainer)
+
+	return homeContainer, playBtn, quitBtn
 }
 
-func homeButtonsContainer(_window fyne.Window) *fyne.Container {
-    playButton := widget.NewButton("Play", func(){
-        _window.SetContent(play.PlayScreen(_window))
-    })
+func homeButtonsContainer() (*fyne.Container, *widget.Button, *widget.Button) {
+	playButton := widget.NewButton("Play", func() {})
 
-    quitButton := widget.NewButton("Quit", func() {
-        _window.Close()
-    })
+	quitButton := widget.NewButton("Quit", func() {})
 
-    vbox := container.NewVBox(playButton, quitButton)
+	vbox := container.NewVBox(playButton, quitButton)
 
-    // FIX: Does not work for now.
-    vbox.Resize(fyne.NewSize(550.0, 550.0))
-
-    return vbox
+	return vbox, playButton, quitButton
 }
-

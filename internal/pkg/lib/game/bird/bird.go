@@ -10,12 +10,19 @@ import (
 )
 
 const (
-	UP          = float32(0.25)
-	DOWN        = float32(0.1)
-    TOLLERANCE  = float32(0.001)
-	JUMP_HEIGHT = float32(18.0)
-	SPACE_CODE  = 49
+	UP           = float32(0.25)
+	DOWN         = float32(0.1)
+	TOLLERANCE   = float32(0.001)
+	JUMP_HEIGHT  = float32(18.0)
+	BIRD_SIZE    = float32(20.0)
+    RADIUS       = float32(10.0)
+	STROKE_WIDTH = float32(1.0)
+	SPACE_CODE   = 49
 )
+
+func birdSize() fyne.Size {
+	return fyne.NewSize(BIRD_SIZE, BIRD_SIZE)
+}
 
 type Bird struct {
 	*canvas.Circle
@@ -23,9 +30,9 @@ type Bird struct {
 
 func New(_window fyne.Window) *Bird {
 	circle := canvas.NewCircle(color.White)
-	circle.StrokeWidth = 1.0
+	circle.StrokeWidth = STROKE_WIDTH
 	circle.StrokeColor = color.Black
-	circle.Resize(fyne.NewSize(20.0, 20.0))
+	circle.Resize(birdSize())
 
 	bird := &Bird{circle}
 
@@ -44,18 +51,18 @@ func New(_window fyne.Window) *Bird {
 
 func (b Bird) Jump() {
 	target := b.Position().AddXY(0, -JUMP_HEIGHT)
-    nextPosition := b.Position1.SubtractXY(0, UP)
+	nextPosition := b.Position1.SubtractXY(0, UP)
 
 	for range time.Tick(time.Millisecond) {
-        diff := abs32(nextPosition.Y - target.Y)
+		diff := abs32(nextPosition.Y - target.Y)
 
-        if diff <= TOLLERANCE || diff >= JUMP_HEIGHT {
-            break
-        }
+		if diff <= TOLLERANCE || diff >= JUMP_HEIGHT {
+			break
+		}
 
 		b.Move(nextPosition)
 
-        nextPosition = b.Position1.SubtractXY(0, UP)
+		nextPosition = b.Position1.SubtractXY(0, UP)
 	}
 }
 
@@ -72,9 +79,9 @@ func (b Bird) JumpOnSpace(key *fyne.KeyEvent) {
 }
 
 func abs32(f float32) float32 {
-    if f > 0 {
-        return f
-    }
+	if f > 0 {
+		return f
+	}
 
-    return -f
+	return -f
 }

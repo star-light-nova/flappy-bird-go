@@ -7,12 +7,13 @@ import (
 	"fyne.io/fyne/v2/container"
 
 	"github.com/star-light-nova/flappy-bird-go/internal/pkg/lib/game/bird"
+	"github.com/star-light-nova/flappy-bird-go/internal/pkg/lib/game/constants"
 	"github.com/star-light-nova/flappy-bird-go/internal/pkg/lib/game/obstacle"
 )
 
 func NewInfiniteWallObstacles(bird *bird.Bird, _window fyne.Window, gameEndChan chan<- bool) *fyne.Container {
 	wall := container.NewWithoutLayout()
-	wall.Resize(fyne.NewSize(_window.Canvas().Size().Width, _window.Canvas().Size().Height))
+	wall.Resize(constants.FULL_SIZE())
 
 	top, bot := obstacle.Generate(_window)
 
@@ -46,26 +47,29 @@ func wallMovement(wall *fyne.Container, top, bot *obstacle.Obstacle, bird *bird.
 
 		topPos := top.Position()
 		botPos := bot.Position()
-        birdPos := bird.Position1
+        birdPosTop := bird.Position1
+        birdPosBot := bird.Position2
 
-		if isCollidedWithObstacle(topPos, botPos, birdPos, _window.Canvas().Size().Height) {
+		if isCollidedWithObstacle(topPos, botPos, birdPosTop, birdPosBot) {
 			gameEndChan <- true
 			break
 		}
 	}
 }
 
-func isCollidedWithObstacle(topPos, botPos, birdPos fyne.Position, windowHeight float32) bool {
-    bPosX := birdPos.X
-    bPosY := birdPos.Y
+func isCollidedWithObstacle(topPos, botPos, birdPosTop, birdPosBot fyne.Position) bool {
+    bPosX := birdPosTop.X + bird.RADIUS / 2.0
+    
+    bPosYTop := birdPosTop.Y
+    bPosYBot := birdPosBot.Y
 
 	if topPos.X < bPosX && topPos.X+obstacle.RECTANGLE_WIDTH > bPosX {
-		if (bPosY > 0 && bPosY < topPos.Y) || (bPosY > botPos.Y && bPosY < windowHeight) {
+		if (bPosYTop > 0 && bPosYTop < topPos.Y) || (bPosYBot > botPos.Y && bPosYBot < constants.FULL_HEIGHT) {
             return true
 		}
 	}
 
-    if bPosY <= 0 || bPosY >= windowHeight {
+    if bPosYTop <= 0 || bPosYBot >= constants.FULL_HEIGHT {
         return true
     }
 
